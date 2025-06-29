@@ -6,36 +6,7 @@ using Newtonsoft.Json;
 
 internal class Program {
   private static void Main(string[] args) {
-    /*
-    var variable = AnsiConsole.Prompt(new ConfirmationPrompt(string));
-
-    var variable = AnsiConsole.Prompt(new TextPrompt<T>(string));
     
-    var variable = AnsiConsole.Prompt(
-      new SelectionPrompt<T>()
-      .Title(string)
-      .PageSize(int)
-      .MoreChoicesText(string)
-      .AddChoices([])
-    );
-
-    var table = new Table();
-
-    table.AddColumn(new TableColumn(string).Centered());
-    table.AddRow(string[]);
-
-    table.ShowRowSeparators();
-
-    table.Alignment(Justify.Right);
-    table.RightAligned();
-    table.Centered();
-    table.LeftAligned();
-
-    table.Border(TableBorder.Rounded);
-    */
-
-    
-
   }
 }
 
