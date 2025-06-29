@@ -4,31 +4,30 @@ namespace Helpers {
   public static class array {
     // add an element to an array
     public static string[] add(string[] arr, string val) {
-      int n = arr.Length;
-      string[] new_arr = new string[n];
-      new_arr[n] = val;
+      int len = arr.Length;
+      string[] new_arr = new string[len + 1];
+      new_arr[len] = val;
 
-      for (int i = 0; i < n-1; i++) {
-        new_arr[i] = arr[i];
+      for (int idx = 0; idx < len; idx++) {
+        new_arr[idx] = arr[idx];
       }
 
       return new_arr;
     }
 
     // edit an element from an array
-    public static string[] edit(string[] arr, string val, int idx) {
+    public static void edit(string[] arr, string val, int idx) {
       arr[idx] = val;
-      return arr;   
     }
 
     // delete an element from an array
     public static string[] delete(string[] arr, int idx) {
-      int n = arr.Length - 1;
-      string[] new_arr = new string[n];
+      int len = arr.Length - 1;
+      string[] new_arr = new string[len];
 
-      for (int i = 0; i < n; i++) {
-        if (i == idx) continue;
-        new_arr[i] = arr[i];
+      for (int oldidx = 0, newidx = 0; oldidx < len; oldidx++) {
+        if (oldidx == idx) continue;
+        new_arr[newidx++] = arr[oldidx];
       }
 
       return new_arr;
