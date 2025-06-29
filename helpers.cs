@@ -36,23 +36,7 @@ namespace Helpers {
   }
 
   // other helpers maybe later
-    /*
-  var variable = AnsiConsole.Prompt(new ConfirmationPrompt(string));
-
-  var variable = AnsiConsole.Prompt(new TextPrompt<T>(string));
-  
-  var variable = AnsiConsole.Prompt(
-    new SelectionPrompt<T>()
-    .Title(string)
-    .PageSize(int)
-    .MoreChoicesText(string)
-    .AddChoices([])
-  );
-
-  var table = new Table();
-
-  table.AddColumn(new TableColumn(string).Centered());
-  table.AddRow(string[]);
+  /*
 
   table.ShowRowSeparators();
 
@@ -125,10 +109,10 @@ namespace Helpers {
 
     // add multiple rows to a table
     public static Table add_rows(Table table, string[,] rows) {
-      for(int i = 0; i < rows.GetLength(0); i++) {
+      for(int rowidx = 0; rowidx < rows.GetLength(0); rowidx++) {
         string[] row = new string[rows.GetLength(1)];
-        for (int j = 0; j < rows.GetLength(1); j++) {
-          row[j] = rows[i, j];
+        for (int colidx = 0; colidx < rows.GetLength(1); colidx++) {
+          row[colidx] = rows[rowidx, colidx];
         }
         table.AddRow(row);
       }
