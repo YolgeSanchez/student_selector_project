@@ -65,11 +65,18 @@ namespace Helpers {
   */
 
   public static class console {
-    public static bool rconfirm(string msg) {
+    // asks input for a confirmation
+    public static bool read_confirm(string msg) {
       return AnsiConsole.Prompt(new ConfirmationPrompt(msg).InvalidChoiceMessage("[red]Opcion invalida[/]"));
     }
 
-    public static string rstring(string msg) {
+    // writes a message in console
+    public static void write_line(string msg) {
+      AnsiConsole.MarkupLine(msg);
+    }
+
+    // asks for a string to the user
+    public static string read_string(string msg) {
       return AnsiConsole.Prompt(new TextPrompt<string>(msg).Validate(input => {
           if (int.TryParse(input, out _))
             return ValidationResult.Error("[red]Valor invalido[/]");
@@ -79,11 +86,8 @@ namespace Helpers {
       }));
     }
 
-    public static void wline(string msg) {
-      AnsiConsole.MarkupLine(msg);
-    }
-
-    public static int rint(string msg) {
+    // asks for an integer to the user
+    public static int read_int(string msg) {
       return int.Parse(AnsiConsole.Prompt(new TextPrompt<string>(msg).Validate(input => {
         if (!int.TryParse(input, out int n)) 
           return ValidationResult.Error("[red]Numero invalido[/]");
@@ -92,7 +96,45 @@ namespace Helpers {
       })));
     }
 
-    // public static string rselect() {}
-    // public static Table wtable() {}
+    // make a selection list for the user to choose
+    public static string read_select(
+        string[] opt, 
+        string Title, 
+        string MoreChoices = "[grey](Desplácese arriba y abajo para ver más opciones)[/]", 
+        int PageSize = 10
+      ) {
+      return AnsiConsole.Prompt(new SelectionPrompt<string>()
+        .Title(Title)
+        .PageSize(PageSize)
+        .MoreChoicesText(MoreChoices)
+        .AddChoices(opt)
+      );
+    }
+
+    // create a table with its headers but without any rows
+    public static Table create_table(string[] headers) {
+      var table = new Table();
+
+      table.AddColumns(headers);
+
+      table.ShowRowSeparators();
+      table.Border(TableBorder.Rounded);
+
+      return table;
+    }
+
+    // add multiple rows to a table
+    public static Table add_rows(Table table, string[,] rows) {
+      for(int i = 0; i < rows.GetLength(0); i++) {
+        string[] row = new string[rows.GetLength(1)];
+        for (int j = 0; j < rows.GetLength(1); j++) {
+          row[j] = rows[i, j];
+        }
+        table.AddRow(row);
+      }
+
+      return table;
+    }
+
   }
 }
