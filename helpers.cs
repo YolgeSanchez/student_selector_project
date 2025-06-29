@@ -119,7 +119,7 @@ namespace Helpers {
     }
 
     // add multiple rows to a table
-    public static Table add_rows(Table table, string[,] rows) {
+    public static void add_rows(Table table, string[,] rows) {
       for(int rowidx = 0; rowidx < rows.GetLength(0); rowidx++) {
         string[] row = new string[rows.GetLength(1)];
         for (int colidx = 0; colidx < rows.GetLength(1); colidx++) {
@@ -127,8 +127,6 @@ namespace Helpers {
         }
         table.AddRow(row);
       }
-
-      return table;
     }
 
   }
