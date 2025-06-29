@@ -4,6 +4,10 @@ namespace Helpers {
   public static class array {
     // add an element to an array
     public static string[] add(string[] arr, string val) {
+      // validate duplicates
+      if (Array.IndexOf(arr, val) != -1) throw new Exception("Valor duplicado");
+
+      // add element
       int len = arr.Length;
       string[] new_arr = new string[len + 1];
       new_arr[len] = val;
@@ -17,12 +21,20 @@ namespace Helpers {
 
     // edit an element from an array
     public static void edit(string[] arr, string val, int idx) {
+      // validate duplicates
+      if (Array.IndexOf(arr, val) != -1) throw new Exception("Valor duplicado");
+
+      // edit element
       arr[idx] = val;
     }
 
     // delete an element from an array
     public static string[] delete(string[] arr, int idx) {
-      int len = arr.Length - 1;
+      // validate index
+      int len = arr.Length;
+      if (idx >= len--) throw new Exception("Indice fuera de rango");
+
+      // delete element
       string[] new_arr = new string[len];
 
       for (int oldidx = 0, newidx = 0; oldidx < len; oldidx++) {
@@ -74,7 +86,7 @@ namespace Helpers {
       return int.Parse(AnsiConsole.Prompt(new TextPrompt<string>(msg).Validate(input => {
         if (!int.TryParse(input, out int n)) 
           return ValidationResult.Error("[red]Numero invalido[/]");
-        else if (n <= 0) return ValidationResult.Error("[red]Numero invalido[/]");
+        else if (n < 0) return ValidationResult.Error("[red]Numero invalido[/]");
         return ValidationResult.Success();
       })));
     }
