@@ -2,11 +2,11 @@ using Spectre.Console;
 
 namespace Helpers {
   public static class array {
-    public static string[] add(string[] arr, string val) {
+    public static T[] add<T>(T[] arr, T val) {
       if (Array.IndexOf(arr, val) != -1) throw new Exception("[red]Valor duplicado[/]");
 
       int len = arr.Length;
-      string[] new_arr = new string[len + 1];
+      T[] new_arr = new T[len + 1];
       new_arr[len] = val;
 
       for (int idx = 0; idx < len; idx++) {
@@ -16,17 +16,17 @@ namespace Helpers {
       return new_arr;
     }
 
-    public static void edit(string[] arr, string val, int idx) {
+    public static void edit<T>(T[] arr, T val, int idx) {
       if (Array.IndexOf(arr, val) != -1) throw new Exception("[red]Valor duplicado[/]");
 
       arr[idx] = val;
     }
 
-    public static string[] delete(string[] arr, int idx) {
+    public static T[] remove<T>(T[] arr, int idx) {
       int len = arr.Length;
       if (idx >= len--) throw new Exception("[red]Indice fuera de rango[/]");
 
-      string[] new_arr = new string[len];
+      T[] new_arr = new T[len];
 
       for (int oldidx = 0, newidx = 0; oldidx < len; oldidx++) {
         if (oldidx == idx) continue;
