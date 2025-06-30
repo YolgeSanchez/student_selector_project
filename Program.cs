@@ -3,12 +3,12 @@ using Helpers;
 using Spectre.Console;
 using Humanizer;
 using Newtonsoft.Json;
+using clases;
 
 internal class Program {
 
   private static readonly string[] menu_options = {"Estudiantes", "Roles", "Salir"};
   private static readonly string[] students_options = {"Ver estudiantes", "Agregar estudiante", "Editar estudiante", "Eliminar estudiante", "<- Atras"};
-  private static string[] students = {"Jorge Sanchez", "Joel Benites", "Giancarlo Perez", "Irvin Samboy"};
   private static string[] roles = {"Developer", "Designer", "Leader"};
 
 
@@ -54,10 +54,36 @@ internal class Program {
 
       switch (menu_students) {
         case "Ver estudiantes":
-          show_table(["Estudiantes"], array.to_2d(students));
+          show_table(["Estudiantes", "Roles"], Student.students_list_matrix());
+
+          break;
+        case "Agregar estudiante":
+          string student;
+          string msg;
+
+          student = console.read_string("Ingresa el nombre del estudiante: ");
+
+          msg = Student.add_student(student);
+          console.write_line(msg);
+
+          break;
+        case "Editar estudiante":
+          student = console.read_select(Student.students_list(), "Selecciona un estudiante para editar");
+          string new_name = console.read_string("Ingresa el nuevo nombre del estudiante: "); 
+
+          msg = Student.edit_student(student, new_name);
+          console.write_line(msg);
+
           break;
         case "Eliminar estudiante":
-          var select_student = console.read_select(students, "Selecciona un estudiante para eliminar");
+          student = console.read_select(Student.students_list(), "Selecciona un estudiante para eliminar");
+          bool confirm = console.read_confirm("Seguro de que quieres eliminar este estudiante?: ");
+
+          if (!confirm) break;
+
+          msg = Student.remove_student(student);
+          console.write_line(student);
+
           break;
       }
     }
@@ -72,8 +98,9 @@ necesidades claras ------------------------------------
 [x] cuando quiera salir pedir confirmacion de querer salir
 
 [] crear una lista donde se almacenen roles
-[] crear una lista donde se almacenen estudiantes
-[] crear helpers para agregar, editar y eliminar estudiantes y roles
+[x] crear una lista donde se almacenen estudiantes
+[x] crear helpers para agregar, editar y eliminar estudiantes
+[] crear helpers para agregar, editar y eliminar roles
 
 [] seleccionar dos estudiantes al azar de la lista
 [] asignar roles a esos estudiantes seleccionados
