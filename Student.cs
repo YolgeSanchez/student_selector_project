@@ -1,7 +1,7 @@
 using Spectre.Console;
 using Helpers;
 
-namespace Student {
+namespace clases {
   public class Student {
     public static Student[] students = new Student[0];
     string name;
@@ -14,6 +14,43 @@ namespace Student {
       for (int idx = 0; idx < students.Length; idx++) names[idx] = students[idx].name;
 
       return names;
+    }
+
+    public static string[,] students_list_matrix() {
+      string[,] students_matrix = new string[students.Length, 2];
+
+      for (int row = 0; row < students.Length; row++) {
+        string name = students[row].name;
+        string roles = string.Join(", ", students[row].roles);
+
+        students_matrix[row, 0] = name;
+        students_matrix[row, 1] = roles;
+      }
+
+      return students_matrix;
+    }
+
+    public static string add_role(string student_name, string rol) {
+      int idx = Array.IndexOf(students_list(), student_name);
+      string[] roles = students[idx].roles;
+      
+      try {
+        students[idx].roles = array.add(roles, rol);
+      } catch {
+        return "[red]Este estudiante ya posee ese rol[/]";
+      }
+
+      return "[green]Rol agregado correctamente[/]";
+    }
+
+    public static string remove_role(string student_name, string rol) {
+      int idx = Array.IndexOf(students_list(), student_name);
+      string[] roles = students[idx].roles;
+      int rol_idx = Array.IndexOf(roles, rol);
+
+      students[idx].roles = array.remove(roles, rol_idx);
+
+      return "[green]Rol eliminado correctamente[/]";
     }
 
     public static string add_student(string name) {
@@ -34,7 +71,7 @@ namespace Student {
     }
 
     public static string edit_student(string name, string new_name) {
-      if (Array.IndexOf(students_list(), new_name) != 1) return "[red]El nombre que intenta asignar ya existe[/]";
+      if (Array.IndexOf(students_list(), new_name) != -1) return "[red]El nombre que intenta asignar ya existe[/]";
 
       int idx = Array.IndexOf(students_list(), name);
       students[idx].name = new_name;
