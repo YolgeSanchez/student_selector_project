@@ -6,7 +6,8 @@ using Newtonsoft.Json;
 
 internal class Program {
 
-  private static readonly string[] menu_options = {"Ver estudiantes", "Ver roles", "Salir"};
+  private static readonly string[] menu_options = {"Estudiantes", "Roles", "Salir"};
+  private static readonly string[] students_options = {"Ver estudiantes", "Agregar estudiante", "Editar estudiante", "Eliminar estudiante", "<- Atras"};
   private static string[] students = {"Jorge Sanchez", "Joel Benites", "Giancarlo Perez", "Irvin Samboy"};
   private static string[] roles = {"Developer", "Designer", "Leader"};
 
@@ -37,12 +38,28 @@ internal class Program {
 
   private static void menu_selection(string menu) {
     switch (menu) {
-      case "Ver estudiantes":
-        show_table(["Estudiantes"], array.to_2d(students));
+      case "Estudiantes":
+        students_selection();
         break;
-      case "Ver roles":
+      case "Roles":
         show_table(["Roles"], array.to_2d(roles));
         break;
+    }
+  }
+
+  private static void students_selection() {
+    while(true) {
+      var menu_students = console.read_select(students_options, "Estudiantes");
+      if (menu_students == "<- Atras") break;
+
+      switch (menu_students) {
+        case "Ver estudiantes":
+          show_table(["Estudiantes"], array.to_2d(students));
+          break;
+        case "Eliminar estudiante":
+          var select_student = console.read_select(students, "Selecciona un estudiante para eliminar");
+          break;
+      }
     }
   }
 }
@@ -66,7 +83,7 @@ necesidades claras ------------------------------------
 
 [] las entradas del usuario deben ser siempre validadas
 [] manejo de errores ---------
-  listas vacias
+  [] listas vacias
   [x] opciones del menu incorrectas
 
 [] guardar historial de giros anteriores en archivos txt o csv
