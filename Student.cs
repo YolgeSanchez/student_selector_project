@@ -53,6 +53,13 @@ namespace clases {
       return "[green]Rol eliminado correctamente[/]";
     }
 
+    public static bool find_role(string student_name, string rol) {
+      int idx = Array.IndexOf(students_list(), student_name);
+      string[] roles = students[idx].roles;
+
+      return Array.IndexOf(roles, rol) != 1;
+    }
+
     public static string add_student(string name) {
       if (Array.IndexOf(students_list(), name) != -1) return "[red]Este estudiante ya existe[/]";
 
