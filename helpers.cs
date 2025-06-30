@@ -44,6 +44,15 @@ namespace Helpers {
 
       return new_arr;
     }
+
+    public static string[,] to_2d(string[] arr) {
+      int len = arr.Length;
+      string[,] new_arr = new string[len, 1];
+
+      for (int idx = 0; idx < len; idx++) new_arr[idx, 0] = arr[idx];
+
+      return new_arr;
+    }
   }
 
   // other helpers maybe later
@@ -60,17 +69,14 @@ namespace Helpers {
   */
 
   public static class console {
-    // asks input for a confirmation
     public static bool read_confirm(string msg) {
       return AnsiConsole.Prompt(new ConfirmationPrompt(msg).InvalidChoiceMessage("[red]Opcion invalida[/]"));
     }
 
-    // writes a message in console
     public static void write_line(string msg) {
       AnsiConsole.MarkupLine(msg);
     }
 
-    // asks for a string to the user
     public static string read_string(string msg) {
       return AnsiConsole.Prompt(new TextPrompt<string>(msg).Validate(input => {
           if (int.TryParse(input, out _))
@@ -81,7 +87,6 @@ namespace Helpers {
       }));
     }
 
-    // asks for an integer to the user
     public static int read_int(string msg) {
       return int.Parse(AnsiConsole.Prompt(new TextPrompt<string>(msg).Validate(input => {
         if (!int.TryParse(input, out int n)) 
@@ -91,7 +96,6 @@ namespace Helpers {
       })));
     }
 
-    // make a selection list for the user to choose
     public static string read_select(
         string[] opt, 
         string Title, 
@@ -106,7 +110,6 @@ namespace Helpers {
       );
     }
 
-    // create a table with its headers but without any rows
     public static Table create_table(string[] headers) {
       var table = new Table();
 
@@ -118,13 +121,14 @@ namespace Helpers {
       return table;
     }
 
-    // add multiple rows to a table
     public static void add_rows(Table table, string[,] rows) {
       for(int rowidx = 0; rowidx < rows.GetLength(0); rowidx++) {
         string[] row = new string[rows.GetLength(1)];
+        
         for (int colidx = 0; colidx < rows.GetLength(1); colidx++) {
           row[colidx] = rows[rowidx, colidx];
         }
+
         table.AddRow(row);
       }
     }
