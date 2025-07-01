@@ -3,7 +3,7 @@ using Helpers;
 using Spectre.Console;
 using Humanizer;
 using Newtonsoft.Json;
-using clases;
+using Clases;
 
 internal class Program {
 

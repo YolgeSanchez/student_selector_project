@@ -1,7 +1,7 @@
 using Spectre.Console;
 using Helpers;
 
-namespace clases {
+namespace Clases {
   public class Student {
     public static Student[] students = new Student[0];
     string name;
