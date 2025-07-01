@@ -16,12 +16,6 @@ namespace Helpers {
       return new_arr;
     }
 
-    public static void edit<T>(T[] arr, T val, int idx) {
-      if (Array.IndexOf(arr, val) != -1) throw new Exception("[red]Valor duplicado[/]");
-
-      arr[idx] = val;
-    }
-
     public static T[] remove<T>(T[] arr, int idx) {
       int len = arr.Length;
       if (idx >= len--) throw new Exception("[red]Indice fuera de rango[/]");
