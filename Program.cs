@@ -9,6 +9,8 @@ internal class Program {
 
   private static readonly string[] menu_options = {"Estudiantes", "Roles", "Salir"};
   private static readonly string[] students_options = {"Ver estudiantes", "Agregar estudiante", "Editar estudiante", "Eliminar estudiante", "<- Atras"};
+  private static readonly string[] roles_options = {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
+
   private static string[] roles = {"Developer", "Designer", "Leader"};
 
 
@@ -42,7 +44,7 @@ internal class Program {
         students_selection();
         break;
       case "Roles":
-        show_table(["Roles"], array.to_2d(roles));
+        roles_selection();
         break;
     }
   }
@@ -61,7 +63,7 @@ internal class Program {
           string student;
           string msg;
 
-          student = console.read_string("Ingresa el nombre del estudiante: ");
+          student = console.read_string("Ingresa el nombre del estudiante que desea agregar: ");
 
           msg = Student.add_student(student);
           console.write_line(msg);
@@ -79,7 +81,10 @@ internal class Program {
           student = console.read_select(Student.students_list(), "Selecciona un estudiante para eliminar");
           bool confirm = console.read_confirm("Seguro de que quieres eliminar este estudiante?: ");
 
-          if (!confirm) break;
+          if (!confirm) {
+            console.write_line("[grey]Accion cancelada[/]");
+            break;
+          };
 
           msg = Student.remove_student(student);
           console.write_line(student);
@@ -87,6 +92,62 @@ internal class Program {
           break;
       }
     }
+  }
+
+  private static void roles_selection() {
+// {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
+    while(true) {
+      string menu_roles = console.read_select(roles_options, "Roles");      
+      if (menu_roles == "<- Atras") break;
+
+      switch (menu_roles) {
+        case "Ver roles":
+          show_table(["Roles"], array.to_2d(roles));
+
+          break;
+        case "Agregar rol":
+          string role;
+
+          role = console.read_string("Ingresa el rol que desea agregar: ");
+
+          if (Array.IndexOf(roles, role) != -1) {
+            console.write_line("[red]Este rol ya existe[/]");
+            break; 
+          }
+
+          roles = array.add(roles, role);
+          console.write_line("[green]Rol agregado correctamente[/]");
+          break;
+        case "Editar rol":
+          role = console.read_select(roles, "Selecciona un rol para editar");
+          string new_role = console.read_string("Ingresa el nuevo nombre para este rol: ");
+          int idx = Array.IndexOf(roles, role);
+
+          bool exists = Array.IndexOf(roles, new_role) != -1;
+          if (exists) {
+            console.write_line("[red]El rol que intenta asignar ya existe[/]");
+            break;
+          }
+
+          roles[idx] = new_role;
+          console.write_line("[green]Rol actualizado correctamente[/]");
+
+          break;
+        case "Eliminar rol":
+          role = console.read_select(roles, "Selecciona un rol para eliminar");
+          idx = Array.IndexOf(roles, role);
+          bool confirm = console.read_confirm("Seguro de que quieres eliminar este rol?: ");
+
+          if (!confirm){
+            console.write_line("[grey]Accion cancelada[/]");
+            break;
+          }
+
+          roles = array.remove(roles, idx);
+          console.write_line("[green]Rol eliminado correctamente[/]");
+          break;
+      }
+    } 
   }
 }
 
@@ -97,10 +158,10 @@ necesidades claras ------------------------------------
 [x] repetir hasta que el usuario desee salir
 [x] cuando quiera salir pedir confirmacion de querer salir
 
-[] crear una lista donde se almacenen roles
+[x] crear una lista donde se almacenen roles
 [x] crear una lista donde se almacenen estudiantes
 [x] crear helpers para agregar, editar y eliminar estudiantes
-[] crear helpers para agregar, editar y eliminar roles
+[x] crear helpers para agregar, editar y eliminar roles
 
 [] seleccionar dos estudiantes al azar de la lista
 [] asignar roles a esos estudiantes seleccionados
