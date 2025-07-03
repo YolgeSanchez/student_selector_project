@@ -3,9 +3,9 @@ using Helpers;
 
 namespace Clases {
   public class Student {
-    public static Student[] students = new Student[0];
-    string name;
-    string[] roles = new string[0];
+    static Student[] students = Data.students;
+    public string name;
+    public string[] roles = new string[0];
 
     public Student(string name) => this.name = name;
 

@@ -11,7 +11,7 @@ internal class Program {
   private static readonly string[] students_options = {"Ver estudiantes", "Agregar estudiante", "Editar estudiante", "Eliminar estudiante", "<- Atras"};
   private static readonly string[] roles_options = {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
 
-  private static string[] roles = {"Developer", "Designer", "Leader"};
+  private static string[] roles = Data.roles;
 
 
   private static void Main(string[] args) {
