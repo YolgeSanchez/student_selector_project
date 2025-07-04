@@ -22,6 +22,7 @@ namespace Clases {
       for (int row = 0; row < students.Length; row++) {
         string name = students[row].name;
         string roles = string.Join(", ", students[row].roles);
+        roles = string.IsNullOrEmpty(roles) ? "[#b5b5b5]<sin roles>[/]" : roles;
 
         students_matrix[row, 0] = name;
         students_matrix[row, 1] = roles;
