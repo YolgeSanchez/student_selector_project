@@ -87,7 +87,7 @@ internal class Program {
           };
 
           msg = Student.remove_student(student);
-          console.write_line(student);
+          console.write_line(msg);
 
           break;
       }
