@@ -18,9 +18,9 @@ namespace Helpers {
 
     public static T[] remove<T>(T[] arr, int idx) {
       int len = arr.Length;
-      if (idx >= len--) throw new Exception("[red]Indice fuera de rango[/]");
+      if (idx >= len) throw new Exception("[red]Indice fuera de rango[/]");
 
-      T[] new_arr = new T[len];
+      T[] new_arr = new T[len - 1];
 
       for (int oldidx = 0, newidx = 0; oldidx < len; oldidx++) {
         if (oldidx == idx) continue;
