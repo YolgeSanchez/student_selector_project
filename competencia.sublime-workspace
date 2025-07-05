@@ -1,0 +1,372 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"stud",
+				"student_name"
+			],
+			[
+				"remove",
+				"remove_student"
+			],
+			[
+				"ad",
+				"add_student"
+			],
+			[
+				"studnets_list",
+				"students_list_matrix"
+			],
+			[
+				"students",
+				"students_names"
+			],
+			[
+				"Null",
+				"Nullable"
+			],
+			[
+				"array",
+				"Array"
+			],
+			[
+				"More",
+				"MoreChoicesText<>"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Vintageous/Vintageous.sublime-build",
+					""
+				],
+				[
+					"Packages/Vintageous/Vintageous.sublime-build",
+					"Vintageous - Test (All)"
+				],
+				[
+					"Packages/Vintageous/Vintageous.sublime-build",
+					"Vintageous - Test (This File Only)"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/User/c++run.sublime-build",
+					""
+				],
+				[
+					"Packages/User/c++run.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/User/c++run.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"lsp omni",
+				"Preferences: LSP-OmniSharp Settings"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"remove package",
+				"Package Control: Remove Package"
+			],
+			[
+				"copilot",
+				"Preferences: LSP-copilot Settings"
+			],
+			[
+				"install package",
+				"Package Control: Install Package"
+			],
+			[
+				"run",
+				"Build With: C++ Single File - Run"
+			],
+			[
+				"color ",
+				"UI: Select Color Scheme"
+			],
+			[
+				"set color",
+				"UI: Select Color Scheme"
+			],
+			[
+				"remove packa",
+				"Package Control: Remove Package"
+			],
+			[
+				"ma",
+				"Material Theme: Activate theme"
+			],
+			[
+				"mat",
+				"Material Theme: Activate theme"
+			],
+			[
+				" intsall pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 131.199996948,
+		"history":
+		[
+			"cls",
+			"ls",
+			"Install Package Control"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+	],
+	"file_history":
+	[
+		"/D/ITLA/cuatrimestre 2/fundamentos de programacion/competencia/Student.cs",
+		"/D/ITLA/cuatrimestre 2/fundamentos de programacion/competencia/helpers.cs",
+		"/D/ITLA/cuatrimestre 2/fundamentos de programacion/competencia/Program.cs",
+		"/D/ITLA/cuatrimestre 2/fundamentos de programacion/competencia/Roulette.cs",
+		"/D/ITLA/cuatrimestre 2/fundamentos de programacion/competencia/Data.cs",
+		"/D/ITLA/cuatrimestre 2/fundamentos de programacion/competencia/competencia.csproj",
+		"/D/PROGRAMACION/DSA/problems/output.txt",
+		"/D/PROGRAMACION/DSA/problems/input.txt",
+		"/D/ITLA/cuatrimestre 2/fundamentos de programacion/tarea 6/Ciclos_JorgeSanchez/07_user_two_numbers/Program.cs",
+		"/D/PROGRAMACION/DSA/problems/solution.cpp",
+		"/C/Users/rayni/AppData/Roaming/Sublime Text/Packages/User/c++run.sublime-build",
+		"/D/PROGRAMACION/DSA/problems/a.cpp",
+		"/D/ITLA/cuatrimestre 2/fundamentos de programacion/tarea 6/Ciclos_JorgeSanchez/01_1a500/Program.cs",
+		"/C/Users/rayni/AppData/Roaming/Sublime Text/Packages/saludos.js"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"using",
+			"\n    "
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 32.0
+	},
+	"input":
+	{
+		"height": 75.6
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.LSP Log Panel":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.diagnostics":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.exec":
+	{
+		"height": 190.800003052,
+		"history":
+		[
+			"123",
+			"1234",
+			"4",
+			"412",
+			"2312",
+			"1231",
+			"12",
+			"13",
+			"12312",
+			"3213",
+			"1",
+			"10 10",
+			"2 10",
+			"2"
+		]
+	},
+	"output.find_results":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"pinned_build_system": "Packages/User/c++run.sublime-build",
+	"project": "competencia.sublime-project",
+	"replace":
+	{
+		"height": 60.8
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"_vintageous_last_buffer_search": "roles",
+		"_vintageous_last_buffer_search_command": "vi_slash",
+		"_vintageous_last_char_search_command": "vi_big_t",
+		"_vintageous_last_character_search": "{",
+		"_vintageous_reset_during_init": true,
+		"lsp_show_inlay_hints": false,
+		"vintage":
+		{
+			"_cmdline_cd": "D:\\ITLA\\cuatrimestre 2\\fundamentos de programacion\\competencia"
+		}
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 235.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 2
+	}
+}

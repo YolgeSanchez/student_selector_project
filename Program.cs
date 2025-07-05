@@ -7,9 +7,10 @@ using Clases;
 
 internal class Program {
 
-  private static readonly string[] menu_options = {"Estudiantes", "Roles", "Salir"};
+  private static readonly string[] menu_options = {"Ruleta", "Estudiantes", "Roles", "Salir"};
   private static readonly string[] students_options = {"Ver estudiantes", "Agregar estudiante", "Editar estudiante", "Eliminar estudiante", "<- Atras"};
   private static readonly string[] roles_options = {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
+  private static readonly string[] roulette_options = {"Girar ruleta", "<- Atras"};
 
   private static string[] roles = Data.roles;
 
@@ -46,12 +47,30 @@ internal class Program {
       case "Roles":
         roles_selection();
         break;
+      case "Ruleta":
+        roulette_selection();
+        break;
+    }
+  }
+
+  private static void roulette_selection() {
+    while(true) {
+      string menu_roulette = console.read_select(roulette_options, "Ruleta");
+      if (menu_roulette == "<- Atras") break;
+
+      switch (menu_roulette) {
+        case "Girar ruleta":
+          string[,] msg = Roulette.spin(); 
+          show_table(["Estudiantes", "Roles"], msg);
+          
+          break; 
+      }
     }
   }
 
   private static void students_selection() {
     while(true) {
-      var menu_students = console.read_select(students_options, "Estudiantes");
+      string menu_students = console.read_select(students_options, "Estudiantes");
       if (menu_students == "<- Atras") break;
 
       switch (menu_students) {
