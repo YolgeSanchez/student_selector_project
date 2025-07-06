@@ -3,29 +3,54 @@ using Clases;
 
 namespace Clases {
   public static class Roulette {
-    public static string[,] spin() {
+    public static string[,] spin(string[] roles) {
       Random rnd = new Random();  
-      // en el caso de que solo tenga 2 roles
-      int a = 0, b = 0;
-      do {
-        a = rnd.Next(Data.students.Length);
-        b = rnd.Next(Data.students.Length);
-      } while (a == b);
 
-      string name_a = Data.students[a].name;
-      string name_b = Data.students[b].name;
+      string[,] result = new string[roles.Length, 2];
+      string[] students = Student.students_list();
+      int rs_idx = 0;
+      bool valid = true;
 
-      Student.add_role(name_a, Data.roles[0]);
-      Student.add_role(name_b, Data.roles[1]);
+      foreach (string role in roles) {
+        int[] seen = new int[0]; 
+        valid = false;
 
-      string[,] selection = {{name_a, Data.roles[0]}, {name_b, Data.roles[1]}};
-      return selection;
+        while (seen.Length != students.Length) {
+          int idx = rnd.Next(students.Length);
+
+          if (Array.IndexOf(seen, idx) != -1) continue; 
+
+          bool alreadyAssigned = false;
+          for (int row = 0; row < rs_idx; row++) {
+            if (result[row,0] == students[idx]) {
+              alreadyAssigned = true;
+              break;
+            }
+          }
+
+          if (alreadyAssigned) {
+            seen = array.add(seen, idx);
+            continue;
+          } else if (Array.IndexOf(Data.students[idx].roles, role) != -1) {
+            seen = array.add(seen, idx);
+            continue;
+          }
+          
+          result[rs_idx, 0] = students[idx];
+          result[rs_idx, 1] = role;
+          rs_idx++;
+          valid = true;
+          break;
+        }
+
+        if (!valid) throw new Exception("[red]No es posible hacer este giro[/]");
+      }
+
+      for (int row = 0; row < result.GetLength(0); row++) {
+        Student.add_role(result[row, 0], result[row, 1]);
+      }
+
+      return result;
     }
   }
 }
-
-/* 
-que necesito?
-tener un registro de los estudiantes y los roles que se les han sido asignados hoy
-poder girar la ruleta y obtener 2 estudiantes aleatorios
-*/
