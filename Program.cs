@@ -60,9 +60,22 @@ internal class Program {
 
       switch (menu_roulette) {
         case "Girar ruleta":
-          string[,] msg = Roulette.spin(); 
-          show_table(["Estudiantes", "Roles"], msg);
-          
+          var selection = AnsiConsole.Prompt(new MultiSelectionPrompt<string>()
+            .Title("Selecciona los roles a asignar en este giro de la ruleta: ")
+            .PageSize(10)
+            .MoreChoicesText("[#b5b5b5](Muevete hacia arriba y abajo para revelar mas roles)[/]")
+            .InstructionsText(
+              "[#b5b5b5](Presiona [blue]<space>[/] para seleccionar un rol, " + 
+              "[green]<enter>[/] para aceptar)[/]")
+            .AddChoices(Data.roles));
+
+          string[] convert = selection.ToArray();
+          try {
+            string[,] msg = Roulette.spin(convert); 
+            show_table(["Estudiante", "Rol"], msg);
+          } catch (Exception ex) {
+            console.write_line(ex.Message);
+          }
           break; 
       }
     }
@@ -75,7 +88,7 @@ internal class Program {
 
       switch (menu_students) {
         case "Ver estudiantes":
-          show_table(["Estudiantes", "Roles"], Student.students_list_matrix());
+          show_table(["Estudiante", "Roles"], Student.students_list_matrix());
 
           break;
         case "Agregar estudiante":
@@ -121,7 +134,7 @@ internal class Program {
 
       switch (menu_roles) {
         case "Ver roles":
-          show_table(["Roles"], array.to_2d(roles));
+          show_table(["Rol"], array.to_2d(roles));
 
           break;
         case "Agregar rol":
@@ -182,13 +195,13 @@ necesidades claras ------------------------------------
 [x] crear helpers para agregar, editar y eliminar estudiantes
 [x] crear helpers para agregar, editar y eliminar roles
 
-[] seleccionar dos estudiantes al azar de la lista
-[] asignar roles a esos estudiantes seleccionados
-[] no puede salir un mismo estudiante en el mismo giro de ruleta
-[] permitir girar la ruleta varias veces
-[] ver los dos ultimos seleccionados del giro anterior
+[x] seleccionar dos estudiantes al azar de la lista
+[x] asignar roles a esos estudiantes seleccionados
+[x] no puede salir un mismo estudiante en el mismo giro de ruleta
+[x] permitir girar la ruleta varias veces
+[x] ver los dos ultimos seleccionados del giro anterior
 
-[] las entradas del usuario deben ser siempre validadas
+[x] las entradas del usuario deben ser siempre validadas
 [] manejo de errores ---------
   [] listas vacias
   [x] opciones del menu incorrectas
