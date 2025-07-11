@@ -10,9 +10,10 @@ internal class Program {
   private static readonly string[] menu_options = {"Ruleta", "Estudiantes", "Roles", "Salir"};
   private static readonly string[] students_options = {"Ver estudiantes", "Agregar estudiante", "Editar estudiante", "Eliminar estudiante", "<- Atras"};
   private static readonly string[] roles_options = {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
-  private static readonly string[] roulette_options = {"Girar ruleta", "<- Atras"};
+  private static readonly string[] roulette_options = {"Girar ruleta", "Girar ruleta con ultima seleccion", "<- Atras"};
 
   private static string[] roles = Data.roles;
+  private static string[] last_roulette_selection = new string[0];
 
 
   private static void Main(string[] args) {
@@ -70,6 +71,7 @@ internal class Program {
             .AddChoices(Data.roles));
 
           string[] convert = selection.ToArray();
+          last_roulette_selection = convert;
           try {
             string[,] msg = Roulette.spin(convert); 
             show_table(["Estudiante", "Rol"], msg);
@@ -77,6 +79,19 @@ internal class Program {
             console.write_line(ex.Message);
           }
           break; 
+        case "Girar ruleta con ultima seleccion":
+          if (last_roulette_selection.Length == 0) {
+            console.write_line("[red]No ha hecho ningun giro de ruleta todavia[/]");
+            break;
+          }
+
+          try {
+            string[,] msg = Roulette.spin(last_roulette_selection); 
+            show_table(["Estudiante", "Rol"], msg);
+          } catch (Exception ex) {
+            console.write_line(ex.Message);
+          }
+          break;
       }
     }
   }
