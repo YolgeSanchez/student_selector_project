@@ -3,7 +3,7 @@ using Helpers;
 
 namespace Clases {
   public class Student {
-    static Student[] students = Data.students;
+    public static Student[] students = Data.students;
     public string name;
     public string[] roles = new string[0];
 
