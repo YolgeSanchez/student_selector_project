@@ -9,6 +9,7 @@ internal class Program {
 
   private static readonly string[] menu_options = {"Ruleta", "Estudiantes", "Roles", "Salir"};
   private static readonly string[] students_options = {"Ver estudiantes", "Agregar estudiante", "Editar estudiante", "Eliminar estudiante", "<- Atras"};
+  private static readonly string[] edit_student_actions = {"Nombre", "Roles"};
   private static readonly string[] roles_options = {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
   private static readonly string[] roulette_options = {"Girar ruleta", "Girar ruleta con ultima seleccion", "<- Atras"};
 
@@ -104,7 +105,6 @@ internal class Program {
       switch (menu_students) {
         case "Ver estudiantes":
           show_table(["Estudiante", "Roles"], Student.students_list_matrix());
-
           break;
         case "Agregar estudiante":
           string student;
@@ -118,10 +118,43 @@ internal class Program {
           break;
         case "Editar estudiante":
           student = console.read_select(Student.students_list(), "Selecciona un estudiante para editar");
-          string new_name = console.read_string("Ingresa el nuevo nombre del estudiante: "); 
+          int student_idx = Array.IndexOf(Student.students_list(), student);
+          string action = console.read_select(edit_student_actions, "Que desea editar?: ");
 
-          msg = Student.edit_student(student, new_name);
-          console.write_line(msg);
+          switch (action)  {
+            case "Nombre":
+              string new_name = console.read_string("Ingresa el nuevo nombre del estudiante: "); 
+              msg = Student.edit_student(student, new_name);
+              console.write_line(msg);
+
+            break;
+            case "Roles": 
+              action = console.read_select(["Agregar", "Eliminar"], "Que desea hacer?: ");
+              switch (action) {
+                case "Agregar":
+
+                  string[] filtered_roles = new string[0];
+                  string[] student_roles = Student.students[student_idx].roles;
+
+                  foreach (var idx in roles) {
+                    if (Array.IndexOf(student_roles, idx) != -1) continue;
+                    filtered_roles = array.add(filtered_roles, idx);
+                  }
+
+                  string role = console.read_select(filtered_roles, "Seleccione el rol a agregar: ");
+                  msg = Student.add_role(student, role);
+                  console.write_line(msg);
+
+                  break;
+                case "Eliminar": 
+                  role = console.read_select(Student.students[student_idx].roles, "Selecciona el rol a eliminar: "); 
+                  msg = Student.remove_role(student, role);
+                  console.write_line(msg);
+
+                  break;
+              }
+            break;
+          }
 
           break;
         case "Eliminar estudiante":
