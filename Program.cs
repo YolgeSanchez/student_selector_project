@@ -35,7 +35,11 @@ internal class Program {
     return console.read_confirm("Estas seguro de que quieres salir?: "); 
   }
 
-  private static void show_table(string[] headers, string[,] rows) {
+  private static void show_table(string[] headers, string[,] rows, string empty = "La lista esta vacia") {
+    if (rows.GetLength(0) == 0) {
+      console.write_line($"[red]{empty}[/]");
+      return;
+    }
     var table = console.create_table(headers);
     console.add_rows(table, rows);
     AnsiConsole.Write(table);
@@ -62,6 +66,14 @@ internal class Program {
 
       switch (menu_roulette) {
         case "Girar ruleta":
+          if (roles.Length == 0) {
+            console.write_line("[red]No hay roles para girar la ruleta[/]");
+            break;
+          } else if (Student.students.Length == 0) {
+            console.write_line("[red]No hay estudiantes para girar la ruleta[/]");
+            break;
+          }
+
           var selection = AnsiConsole.Prompt(new MultiSelectionPrompt<string>()
             .Title("Selecciona los roles a asignar en este giro de la ruleta: ")
             .PageSize(10)
@@ -69,7 +81,7 @@ internal class Program {
             .InstructionsText(
               "[#b5b5b5](Presiona [blue]<space>[/] para seleccionar un rol, " + 
               "[green]<enter>[/] para aceptar)[/]")
-            .AddChoices(Data.roles));
+            .AddChoices(roles));
 
           string[] convert = selection.ToArray();
           last_roulette_selection = convert;
@@ -83,6 +95,19 @@ internal class Program {
         case "Girar ruleta con ultima seleccion":
           if (last_roulette_selection.Length == 0) {
             console.write_line("[red]No ha hecho ningun giro de ruleta todavia[/]");
+            break;
+          }
+
+          bool still_exists = true;
+          for (int idx = 0; idx < last_roulette_selection.Length; idx++) {
+            if (Array.IndexOf(roles, last_roulette_selection[idx]) == -1) {
+              still_exists = false;
+              break;
+            }
+          }
+
+          if (!still_exists) {
+            console.write_line("[red]Los roles usados para el anterior giro fueron modificados o eliminados[/]");
             break;
           }
 
@@ -104,7 +129,7 @@ internal class Program {
 
       switch (menu_students) {
         case "Ver estudiantes":
-          show_table(["Estudiante", "Roles"], Student.students_list_matrix());
+          show_table(["Estudiante", "Roles"], Student.students_list_matrix(), "No hay ningun estudiante que mostrar");
           break;
         case "Agregar estudiante":
           string student;
@@ -117,6 +142,11 @@ internal class Program {
 
           break;
         case "Editar estudiante":
+          if (Student.students_list().Length == 0) {
+            console.write_line("[red]No hay estudiantes que editar en la lista[/]");
+            break;
+          }
+
           student = console.read_select(Student.students_list(), "Selecciona un estudiante para editar");
           int student_idx = Array.IndexOf(Student.students_list(), student);
           string action = console.read_select(edit_student_actions, "Que desea editar?: ");
@@ -136,6 +166,11 @@ internal class Program {
                   string[] filtered_roles = new string[0];
                   string[] student_roles = Student.students[student_idx].roles;
 
+                  if (student_roles.Length == roles.Length) {
+                    console.write_line("[red]No hay roles para agregarle a este estudiante[/]");
+                    break;
+                  }
+
                   foreach (var idx in roles) {
                     if (Array.IndexOf(student_roles, idx) != -1) continue;
                     filtered_roles = array.add(filtered_roles, idx);
@@ -147,6 +182,11 @@ internal class Program {
 
                   break;
                 case "Eliminar": 
+                  if (Student.students[student_idx].roles.Length == 0) {
+                    console.write_line("[red]No tiene roles para eliminarle a este estudiante[/]");
+                    break;
+                  }
+
                   role = console.read_select(Student.students[student_idx].roles, "Selecciona el rol a eliminar: "); 
                   msg = Student.remove_role(student, role);
                   console.write_line(msg);
@@ -158,6 +198,11 @@ internal class Program {
 
           break;
         case "Eliminar estudiante":
+          if (Student.students_list().Length == 0) {
+            console.write_line("[red]No hay estudiantes que eliminar en la lista[/]");
+            break;
+          }
+
           student = console.read_select(Student.students_list(), "Selecciona un estudiante para eliminar");
           bool confirm = console.read_confirm("Seguro de que quieres eliminar este estudiante?: ");
 
@@ -199,6 +244,10 @@ internal class Program {
           console.write_line("[green]Rol agregado correctamente[/]");
           break;
         case "Editar rol":
+          if (roles.Length == 0) {
+            console.write_line("[red]No hay roles para editar[/]");
+            break;
+          }
           role = console.read_select(roles, "Selecciona un rol para editar");
           string new_role = console.read_string("Ingresa el nuevo nombre para este rol: ");
           int idx = Array.IndexOf(roles, role);
@@ -214,6 +263,11 @@ internal class Program {
 
           break;
         case "Eliminar rol":
+          if (roles.Length == 0) {
+            console.write_line("[red]No hay roles que eliminar[/]");
+            break;
+          }
+
           role = console.read_select(roles, "Selecciona un rol para eliminar");
           idx = Array.IndexOf(roles, role);
           bool confirm = console.read_confirm("Seguro de que quieres eliminar este rol?: ");
@@ -250,8 +304,8 @@ necesidades claras ------------------------------------
 [x] ver los dos ultimos seleccionados del giro anterior
 
 [x] las entradas del usuario deben ser siempre validadas
-[] manejo de errores ---------
-  [] listas vacias
+[x] manejo de errores ---------
+  [x] listas vacias
   [x] opciones del menu incorrectas
 
 [] guardar historial de giros anteriores en archivos txt o csv
