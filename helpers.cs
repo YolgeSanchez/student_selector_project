@@ -71,7 +71,7 @@ namespace Helpers {
     public static string read_select(
         string[] opt, 
         string Title, 
-        string MoreChoices = "[grey](Desplácese arriba y abajo para ver más opciones)[/]", 
+        string MoreChoices = "[#b5b5b5](Desplácese arriba y abajo para ver más opciones)[/]", 
         int PageSize = 10
       ) {
       return AnsiConsole.Prompt(new SelectionPrompt<string>()

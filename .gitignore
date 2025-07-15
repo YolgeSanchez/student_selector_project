@@ -55,3 +55,9 @@ nunit-*.xml
 
 # sublime project
 competencia.sublime-*
+competencia.sublime-workspace
+
+# Data
+estudiantes.json
+roles.json
+registros/registro*

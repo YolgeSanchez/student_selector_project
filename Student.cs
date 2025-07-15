@@ -1,13 +1,23 @@
 using Spectre.Console;
 using Helpers;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace Clases {
   public class Student {
-    public static Student[] students = Data.students;
+    public static Student[] students = new Student[0];
     public string name;
     public string[] roles = new string[0];
 
-    public Student(string name) => this.name = name;
+    public Student(string name) {
+      this.name = name;
+    }
+
+    public static void load() {
+      var json = File.ReadAllText("estudiantes.json");
+      string[] students_list = JsonConvert.DeserializeObject<string[]>(json) ?? Array.Empty<string>();
+      foreach (string student in students_list) Student.add_student(student);
+    }
 
     public static string[] students_list() {
       string[] names = new string[students.Length];
@@ -85,6 +95,17 @@ namespace Clases {
       students[idx].name = new_name;
 
       return "[green]Estudiante actualizado correctamente[/]";
+    }
+
+    public static Student[] assign_registry() {
+      Student[] assigned = new Student[0];
+
+      foreach(Student student in students) {
+        if (student.roles.Length == 0) continue;
+        assigned = array.add<Student>(assigned, student);
+      }
+
+      return assigned;
     }
   }
 }

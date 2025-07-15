@@ -4,6 +4,7 @@ using Spectre.Console;
 using Humanizer;
 using Newtonsoft.Json;
 using Clases;
+using System.IO;
 
 internal class Program {
 
@@ -13,22 +14,42 @@ internal class Program {
   private static readonly string[] roles_options = {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
   private static readonly string[] roulette_options = {"Girar ruleta", "Girar ruleta con ultima seleccion", "<- Atras"};
 
-  private static string[] roles = Data.roles;
+  private static string[] roles = new string[0];
   private static string[] last_roulette_selection = new string[0];
 
-
   private static void Main(string[] args) {
+    Student.load();
+    loadRoles();
+
     while(true) {
       var menu = console.read_select(menu_options, "Menu Principal");
 
       if (menu == "Salir") {
         bool exit = confirm_exit();
-        if (exit) break;
+        if (exit) {
+          var roulette_history = JsonConvert.SerializeObject(Student.assign_registry());
+          var students_registry = JsonConvert.SerializeObject(Student.students_list());
+          var roles_registry = JsonConvert.SerializeObject(roles);
+          
+          string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+
+          File.WriteAllText($"registros/registro_{timeStamp}.json", roulette_history);
+          File.WriteAllText("estudiantes.json", students_registry);
+          File.WriteAllText("roles.json", roles_registry);
+
+          break;
+        };
       }  
 
       menu_selection(menu);
 
     } 
+  }
+
+  private static void loadRoles() {
+    var json = File.ReadAllText("roles.json");
+    string[] roles_list = JsonConvert.DeserializeObject<string[]>(json) ?? Array.Empty<string>();
+    foreach (string role in roles_list) roles = array.add(roles, role);
   }
 
   private static bool confirm_exit() {
@@ -207,7 +228,7 @@ internal class Program {
           bool confirm = console.read_confirm("Seguro de que quieres eliminar este estudiante?: ");
 
           if (!confirm) {
-            console.write_line("[grey]Accion cancelada[/]");
+            console.write_line("[#b5b5b5]Accion cancelada[/]");
             break;
           };
 
@@ -273,7 +294,7 @@ internal class Program {
           bool confirm = console.read_confirm("Seguro de que quieres eliminar este rol?: ");
 
           if (!confirm){
-            console.write_line("[grey]Accion cancelada[/]");
+            console.write_line("[#b5b5b5]Accion cancelada[/]");
             break;
           }
 

@@ -31,7 +31,7 @@ namespace Clases {
           if (alreadyAssigned) {
             seen = array.add(seen, idx);
             continue;
-          } else if (Array.IndexOf(Data.students[idx].roles, role) != -1) {
+          } else if (Array.IndexOf(Student.students[idx].roles, role) != -1) {
             seen = array.add(seen, idx);
             continue;
           }
