@@ -8,7 +8,7 @@ using System.IO;
 
 internal class Program {
 
-  private static readonly string[] menu_options = {"Ruleta", "Estudiantes", "Roles", "Salir"};
+  private static readonly string[] menu_options = {"Ruleta", "Estudiantes", "Roles", "Ver registros", "Salir"};
   private static readonly string[] students_options = {"Ver estudiantes", "Agregar estudiante", "Editar estudiante", "Eliminar estudiante", "<- Atras"};
   private static readonly string[] edit_student_actions = {"Nombre", "Roles"};
   private static readonly string[] roles_options = {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
@@ -16,6 +16,7 @@ internal class Program {
 
   private static string[] roles = new string[0];
   private static string[] last_roulette_selection = new string[0];
+  private static string[] registries_options = {"registros", "<- Atras"};
 
   private static void Main(string[] args) {
     Student.load();
@@ -33,9 +34,9 @@ internal class Program {
           
           string timeStamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
 
-          File.WriteAllText($"registros/registro_{timeStamp}.json", roulette_history);
-          File.WriteAllText("estudiantes.json", students_registry);
-          File.WriteAllText("roles.json", roles_registry);
+          File.WriteAllText($"registros/registro_{timeStamp}.txt", roulette_history);
+          File.WriteAllText("estudiantes.txt", students_registry);
+          File.WriteAllText("roles.txt", roles_registry);
 
           break;
         };
@@ -47,8 +48,8 @@ internal class Program {
   }
 
   private static void loadRoles() {
-    var json = File.ReadAllText("roles.json");
-    string[] roles_list = JsonConvert.DeserializeObject<string[]>(json) ?? Array.Empty<string>();
+    var txt = File.ReadAllText("roles.txt");
+    string[] roles_list = JsonConvert.DeserializeObject<string[]>(txt) ?? Array.Empty<string>();
     foreach (string role in roles_list) roles = array.add(roles, role);
   }
 
@@ -77,6 +78,54 @@ internal class Program {
       case "Ruleta":
         roulette_selection();
         break;
+      case "Ver registros":
+        string[] files = Directory.GetFiles("registros");
+        if (files.Length == 0) {
+          console.write_line("[red]No hay ningun registro todavia[/]");
+          break;
+        }
+        load_registries();
+        view_registries();
+        break;
+    }
+  }
+
+  private static void load_registries() {
+    string[] files = Directory.GetFiles("registros").OrderByDescending(f => f).ToArray();
+    if (files.Length == 0) return;
+
+    registries_options = new string[0];
+
+    foreach (string file in files) {
+      string time_string = file
+        .Replace("registros\\registro_", "")
+        .Replace(".txt", "")
+        .Replace("_", " ");
+
+      var file_timestamp = DateTime.ParseExact(time_string, "yyyy-MM-dd HH-mm-ss", null);
+      var difference = DateTime.Now - file_timestamp;
+      string humanized = difference.Humanize();
+      string registry_option = $"Registro de hace {humanized}";
+
+      registries_options = array.add<string>(registries_options, registry_option);
+    }
+
+    registries_options = array.add<string>(registries_options, "<- Atras");
+  }
+
+
+  private static void view_registries() {
+    while(true) {
+      string[] files = Directory.GetFiles("registros").OrderByDescending(f => f).ToArray();
+      string menu_registry = console.read_select(registries_options, "Registros");
+
+      if (menu_registry == "<- Atras") break;
+
+      int file_idx = Array.IndexOf(registries_options, menu_registry);
+      var txt = File.ReadAllText(files[file_idx]);
+      Student[] spins = JsonConvert.DeserializeObject<Student[]>(txt) ?? Array.Empty<Student>();
+
+      show_table(["Estudiante", "Rol"], Student.students_list_matrix(spins), "En este registro no se asigno o giro la ruleta de roles en ningun momento");
     }
   }
 
@@ -150,7 +199,7 @@ internal class Program {
 
       switch (menu_students) {
         case "Ver estudiantes":
-          show_table(["Estudiante", "Roles"], Student.students_list_matrix(), "No hay ningun estudiante que mostrar");
+          show_table(["Estudiante", "Roles"], Student.students_list_matrix(Student.students), "No hay ningun estudiante que mostrar");
           break;
         case "Agregar estudiante":
           string student;
@@ -241,14 +290,13 @@ internal class Program {
   }
 
   private static void roles_selection() {
-// {"Ver roles", "Agregar rol", "Editar rol", "Eliminar rol", "<- Atras"};
     while(true) {
       string menu_roles = console.read_select(roles_options, "Roles");      
       if (menu_roles == "<- Atras") break;
 
       switch (menu_roles) {
         case "Ver roles":
-          show_table(["Rol"], array.to_2d(roles));
+          show_table(["Rol"], array.to_2d(roles), "No hay ningun rol que mostrar");
 
           break;
         case "Agregar rol":
@@ -329,7 +377,7 @@ necesidades claras ------------------------------------
   [x] listas vacias
   [x] opciones del menu incorrectas
 
-[] guardar historial de giros anteriores en archivos txt o csv
-[] permitir acceder al historial de giros anteriores
+[x] guardar historial de giros anteriores en archivos txt o csv
+[x] permitir acceder al historial de giros anteriores
 
 */

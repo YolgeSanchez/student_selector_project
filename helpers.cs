@@ -3,8 +3,6 @@ using Spectre.Console;
 namespace Helpers {
   public static class array {
     public static T[] add<T>(T[] arr, T val) {
-      if (Array.IndexOf(arr, val) != -1) throw new Exception("[red]Valor duplicado[/]");
-
       int len = arr.Length;
       T[] new_arr = new T[len + 1];
       new_arr[len] = val;
@@ -88,7 +86,7 @@ namespace Helpers {
       table.AddColumns(headers);
 
       table.ShowRowSeparators();
-      table.Border(TableBorder.Rounded);
+      table.Border(TableBorder.Square);
 
       return table;
     }

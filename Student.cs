@@ -14,8 +14,8 @@ namespace Clases {
     }
 
     public static void load() {
-      var json = File.ReadAllText("estudiantes.json");
-      string[] students_list = JsonConvert.DeserializeObject<string[]>(json) ?? Array.Empty<string>();
+      var txt = File.ReadAllText("estudiantes.txt");
+      string[] students_list = JsonConvert.DeserializeObject<string[]>(txt) ?? Array.Empty<string>();
       foreach (string student in students_list) Student.add_student(student);
     }
 
@@ -26,7 +26,7 @@ namespace Clases {
       return names;
     }
 
-    public static string[,] students_list_matrix() {
+    public static string[,] students_list_matrix(Student[] students) {
       string[,] students_matrix = new string[students.Length, 2];
 
       for (int row = 0; row < students.Length; row++) {

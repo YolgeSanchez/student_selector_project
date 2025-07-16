@@ -58,6 +58,6 @@ competencia.sublime-*
 competencia.sublime-workspace
 
 # Data
-estudiantes.json
-roles.json
+estudiantes.txt
+roles.txt
 registros/registro*
