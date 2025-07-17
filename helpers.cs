@@ -39,6 +39,22 @@ namespace Helpers {
   }
 
   public static class console {
+    public static void delay(string action) {
+      AnsiConsole.Status()
+      .Start($"{action}...", ctx => {
+        Thread.Sleep(1000);
+
+        ctx.Spinner(Spinner.Known.Smiley);
+
+        Thread.Sleep(500);
+      });
+    }
+    
+    public static void read_key() {
+      console.write_line("Presione cualquier tecla para continuar...");
+      Console.ReadKey();
+    }
+
     public static bool read_confirm(string msg) {
       return AnsiConsole.Prompt(new ConfirmationPrompt(msg).InvalidChoiceMessage("[red]Opcion invalida[/]"));
     }

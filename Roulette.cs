@@ -1,5 +1,6 @@
 using Helpers;
 using Clases;
+using Spectre.Console;
 
 namespace Clases {
   public static class Roulette {
@@ -28,13 +29,12 @@ namespace Clases {
             }
           }
 
-          if (alreadyAssigned) {
-            seen = array.add(seen, idx);
-            continue;
-          } else if (Array.IndexOf(Student.students[idx].roles, role) != -1) {
+          if (alreadyAssigned || Array.IndexOf(Student.students[idx].roles, role) != -1) {
             seen = array.add(seen, idx);
             continue;
           }
+
+          visualRoulette(students, role, idx);
           
           result[rs_idx, 0] = students[idx];
           result[rs_idx, 1] = role;
@@ -51,6 +51,35 @@ namespace Clases {
       }
 
       return result;
+    }
+
+    private static void visualRoulette(string[] students, string role, int final_idx) {
+      int spins = new Random().Next(30, 40);
+      int curr = 0;
+
+      for (int spin = 0; spin < spins; spin++) {
+        AnsiConsole.Clear();
+        console.write_line($"[bold yellow]Seleccionando {role}...[/]\n");
+
+        int highlight_idx = curr % students.Length;
+
+        for (int student_idx = 0; student_idx < students.Length; student_idx++) {
+          if (student_idx == highlight_idx) console.write_line($"[bold green]-> {students[student_idx]}[/]");
+          else console.write_line($"   {students[student_idx]}");
+        }
+
+        curr++;
+        Thread.Sleep(80 + spin * 3);
+      }
+
+      AnsiConsole.Clear();
+      console.write_line("[bold yellow]¡Seleccionado![/]\n");
+
+      for (int student_idx = 0; student_idx < students.Length; student_idx++) {
+        if (student_idx == final_idx) console.write_line($"[bold green]-> {students[student_idx]}[/]");
+        else console.write_line($"   {students[student_idx]}");
+      }
+      Thread.Sleep(2000);
     }
   }
 }
