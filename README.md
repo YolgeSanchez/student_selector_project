@@ -86,4 +86,4 @@ This project demonstrates fundamental programming concepts including:
 
 ## Acknowledgments
 - Instituto Tecnológico De Las Americas (ITLA)
-- Professor of "Fundamentos de Programación"
+- Orison Soto Professor of "Fundamentos de Programación"
