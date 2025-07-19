@@ -30,7 +30,7 @@ internal class Program {
 
       while(!ctx.IsFinished) {
         task1.Increment(1.5);
-        task2.Increment(0.5);
+        task2.Increment(0.8);
         Thread.Sleep(25);
       }
     });
@@ -66,11 +66,13 @@ internal class Program {
 
       while(!ctx.IsFinished) {
         task1.Increment(1.5);
-        Thread.Sleep(25);
+        Thread.Sleep(20);
       }
     });
     Thread.Sleep(400);
     AnsiConsole.Clear();
+
+    AnsiConsole.Write(new FigletText(font, "Adios!"));
   }
 
   private static void loadRoles() {
