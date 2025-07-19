@@ -59,7 +59,7 @@ This console application was developed for the "Fundamentos de Programación" co
 
 ### Installation
 1. Clone this repository
-2. Ensure all required NuGet packages are installed
+2. Ensure all required NuGet packages are installed using `dotnet restore`
 3. Run the application using `dotnet run`
 
 ### Usage
