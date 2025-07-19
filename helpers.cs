@@ -53,6 +53,7 @@ namespace Helpers {
     public static void read_key() {
       console.write_line("Presione cualquier tecla para continuar...");
       Console.ReadKey();
+      AnsiConsole.Clear();
     }
 
     public static bool read_confirm(string msg) {
