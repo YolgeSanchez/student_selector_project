@@ -59,6 +59,18 @@ internal class Program {
     File.WriteAllText($"registros/registro_{timeStamp}.txt", roulette_history);
     File.WriteAllText("estudiantes.txt", students_registry);
     File.WriteAllText("roles.txt", roles_registry);
+
+    AnsiConsole.Progress()
+    .Start(ctx => {
+      var task1 = ctx.AddTask("[green]Guardando archivos[/]");
+
+      while(!ctx.IsFinished) {
+        task1.Increment(1.5);
+        Thread.Sleep(25);
+      }
+    });
+    Thread.Sleep(400);
+    AnsiConsole.Clear();
   }
 
   private static void loadRoles() {
@@ -89,14 +101,17 @@ internal class Program {
     switch (menu) {
       case "Estudiantes":
         AnsiConsole.Clear();
+        Thread.Sleep(150);
         students_selection();
         break;
       case "Roles":
         AnsiConsole.Clear();
+        Thread.Sleep(150);
         roles_selection();
         break;
       case "Ruleta":
         AnsiConsole.Clear();
+        Thread.Sleep(150);
         roulette_selection();
         break;
       case "Ver registros":
@@ -108,6 +123,7 @@ internal class Program {
           break;
         }
         load_registries();
+        console.delay("Cargando registros");
         view_registries();
         break;
     }
@@ -139,7 +155,6 @@ internal class Program {
 
   private static void view_registries() {
     while(true) {
-      AnsiConsole.Write(new FigletText(font, "Registros"));
       string[] files = Directory.GetFiles("registros").OrderByDescending(f => f).ToArray();
       string menu_registry = console.read_select(registries_options, "Registros");
 
@@ -149,13 +164,13 @@ internal class Program {
       var txt = File.ReadAllText(files[file_idx]);
       Student[] spins = JsonConvert.DeserializeObject<Student[]>(txt) ?? Array.Empty<Student>();
 
+      Thread.Sleep(400);
       show_table(["Estudiante", "Rol"], Student.students_list_matrix(spins), "En este registro no se asigno o giro la ruleta de roles en ningun momento");
     }
   }
 
   private static void roulette_selection() {
     while(true) {
-      AnsiConsole.Write(new FigletText(font, "Ruleta"));
       string menu_roulette = console.read_select(roulette_options, "Ruleta");
       if (menu_roulette == "<- Atras") break;
 
@@ -227,13 +242,12 @@ internal class Program {
 
   private static void students_selection() {
     while(true) {
-      AnsiConsole.Write(new FigletText(font, "Estudiantes"));
       string menu_students = console.read_select(students_options, "Estudiantes");
       if (menu_students == "<- Atras") break;
 
       switch (menu_students) {
         case "Ver estudiantes":
-          console.delay("Cargando estudiantes");
+          Thread.Sleep(400);
           show_table(["Estudiante", "Roles"], Student.students_list_matrix(Student.students), "No hay ningun estudiante que mostrar");
           break;
         case "Agregar estudiante":
@@ -243,6 +257,7 @@ internal class Program {
           student = console.read_string("Ingresa el nombre del estudiante que desea agregar: ");
 
           msg = Student.add_student(student);
+          Thread.Sleep(400);
           console.write_line(msg);
           console.read_key();
 
@@ -253,7 +268,7 @@ internal class Program {
             console.read_key();
             break;
           }
-
+          Thread.Sleep(400);
           student = console.read_select(Student.students_list(), "Selecciona un estudiante para editar");
           int student_idx = Array.IndexOf(Student.students_list(), student);
           string action = console.read_select(edit_student_actions, "Que desea editar?: ");
@@ -262,6 +277,7 @@ internal class Program {
             case "Nombre":
               string new_name = console.read_string("Ingresa el nuevo nombre del estudiante: "); 
               msg = Student.edit_student(student, new_name);
+              Thread.Sleep(400);
               console.write_line(msg);
               console.read_key();
 
@@ -285,8 +301,11 @@ internal class Program {
                     filtered_roles = array.add(filtered_roles, idx);
                   }
 
+                  Thread.Sleep(400);
+
                   string role = console.read_select(filtered_roles, "Seleccione el rol a agregar: ");
                   msg = Student.add_role(student, role);
+                  Thread.Sleep(400);
                   console.write_line(msg);
                   console.read_key();
 
@@ -298,8 +317,11 @@ internal class Program {
                     break;
                   }
 
+                  Thread.Sleep(400);
+
                   role = console.read_select(Student.students[student_idx].roles, "Selecciona el rol a eliminar: "); 
                   msg = Student.remove_role(student, role);
+                  Thread.Sleep(400);
                   console.write_line(msg);
                   console.read_key();
 
@@ -316,6 +338,8 @@ internal class Program {
             break;
           }
 
+          Thread.Sleep(400);
+
           student = console.read_select(Student.students_list(), "Selecciona un estudiante para eliminar");
           bool confirm = console.read_confirm("Seguro de que quieres eliminar este estudiante?: ");
 
@@ -326,6 +350,7 @@ internal class Program {
           };
 
           msg = Student.remove_student(student);
+          Thread.Sleep(400);
           console.write_line(msg);
           console.read_key();
 
@@ -338,12 +363,12 @@ internal class Program {
 
   private static void roles_selection() {
     while(true) {
-      AnsiConsole.Write(new FigletText(font, "Roles"));
       string menu_roles = console.read_select(roles_options, "Roles");      
       if (menu_roles == "<- Atras") break;
 
       switch (menu_roles) {
         case "Ver roles":
+          Thread.Sleep(400);
           show_table(["Rol"], array.to_2d(roles), "No hay ningun rol que mostrar");
 
           break;
@@ -351,6 +376,7 @@ internal class Program {
           string role;
 
           role = console.read_string("Ingresa el rol que desea agregar: ");
+          Thread.Sleep(400);
 
           if (Array.IndexOf(roles, role) != -1) {
             console.write_line("[red]Este rol ya existe[/]");
@@ -368,6 +394,7 @@ internal class Program {
             console.read_key();
             break;
           }
+          Thread.Sleep(400);
           role = console.read_select(roles, "Selecciona un rol para editar");
           string new_role = console.read_string("Ingresa el nuevo nombre para este rol: ");
           int idx = Array.IndexOf(roles, role);
@@ -380,6 +407,7 @@ internal class Program {
           }
 
           roles[idx] = new_role;
+          Thread.Sleep(400);
           console.write_line("[green]Rol actualizado correctamente[/]");
           console.read_key();
 
@@ -391,6 +419,7 @@ internal class Program {
             break;
           }
 
+          Thread.Sleep(400);
           role = console.read_select(roles, "Selecciona un rol para eliminar");
           idx = Array.IndexOf(roles, role);
           bool confirm = console.read_confirm("Seguro de que quieres eliminar este rol?: ");
@@ -402,6 +431,7 @@ internal class Program {
           }
 
           roles = array.remove(roles, idx);
+          Thread.Sleep(400);
           console.write_line("[green]Rol eliminado correctamente[/]");
           console.read_key();
           break;
